@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biochimica generale</title>
+    <style>
+        /* ===========================
+       Variabili CSS
+    =========================== */
+        :root {
+            --primary-color: #0073e6;
+            /* Colore originale delle domande */
+            --secondary-color: #fff;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --font-family: Arial, sans-serif;
+            --max-width: 800px;
+            --border-radius: 5px;
+            --padding: 1rem;
+            --font-size-base: 1rem;
+            --line-height-base: 1.5;
+
+            /* Nuove variabili per migliorare la leggibilità */
+            --question-color: #003366;
+            /* Nuovo colore per le domande */
+            --answer-font-weight: bold;
+            /* Aumenta lo spessore del carattere delle risposte */
+            --answer-font-size: 1.2rem;
+            /* Aumenta la dimensione del font delle risposte */
+            --question-font-size: 1.2rem;
+            /* Aumenta la dimensione del font delle domande */
+        }
+
+        /* ===========================
+       Stili Globali
+    =========================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            margin: 0;
+            padding-top: 70px;
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            margin: 0 0 1rem 0;
+            font-weight: bold;
+        }
+
+        /* ===========================
+       Barra di Navigazione Alfabetica
+    =========================== */
+        .alphabet-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            padding: 0.5rem;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .alphabet-nav a {
+            color: var(--secondary-color);
+            margin: 0 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .alphabet-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===========================
+       Barra di Ricerca a Scomparsa
+    =========================== */
+        .search-bar-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        #search-toggle {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #search-bar {
+            margin-top: 0.5rem;
+        }
+
+        #search-bar input[type="text"] {
+            width: 200px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===========================
+       Contenitore FAQ
+    =========================== */
+        .faq-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* ===========================
+       Domande e Risposte
+    =========================== */
+        .question,
+        .answer {
+            padding: var(--padding);
+            border-radius: var(--border-radius);
+        }
+
+        .question {
+            background-color: var(--question-color);
+            /* Usa il nuovo colore */
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: var(--question-font-size);
+            /* Aumenta la dimensione del font */
+        }
+
+        .answer {
+            border: 1px solid #ddd;
+            border-top: none;
+            background-color: var(--secondary-color);
+            margin-bottom: 1rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            font-weight: var(--answer-font-weight);
+            /* Aumenta lo spessore del carattere */
+            font-size: var(--answer-font-size);
+            /* Aumenta la dimensione del font */
+            color: var(--text-color);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===========================
+       Responsive Design
+    =========================== */
+        @media (max-width: 768px) {
+            :root {
+                --font-size-base: 1.2rem;
+                --line-height-base: 1.6;
+                --padding: 1.5rem;
+                --answer-font-size: 1.4rem;
+                --question-font-size: 1.4rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .search-bar-container input[type="text"] {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --font-size-base: 1.4rem;
+                --line-height-base: 1.7;
+                --padding: 1.5rem;
+                --answer-font-size: 1.6rem;
+                --question-font-size: 1.6rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .search-bar-container input[type="text"] {
+                font-size: 1.3rem;
+            }
+        }
+
+
+        /* Mantieni gli stili esistenti per .search-bar-container */
+        .search-bar-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Nuova classe per il contenitore dei pulsanti */
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Stili per entrambi i pulsanti */
+        #button-a,
+        #search-toggle {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Barra di Navigazione Alfabetica -->
+    <div class="alphabet-nav">
+        <a href="#letter-A">A</a>
+        <a href="#letter-B">B</a>
+        <a href="#letter-C">C</a>
+        <a href="#letter-D">D</a>
+        <a href="#letter-E">E</a>
+        <a href="#letter-F">F</a>
+        <a href="#letter-G">G</a>
+        <a href="#letter-H">H</a>
+        <a href="#letter-I">I</a>
+        <a href="#letter-J">J</a>
+        <a href="#letter-K">K</a>
+        <a href="#letter-L">L</a>
+        <a href="#letter-M">M</a>
+        <a href="#letter-N">N</a>
+        <a href="#letter-O">O</a>
+        <a href="#letter-P">P</a>
+        <a href="#letter-Q">Q</a>
+        <a href="#letter-R">R</a>
+        <a href="#letter-S">S</a>
+        <a href="#letter-T">T</a>
+        <a href="#letter-U">U</a>
+        <a href="#letter-V">V</a>
+        <a href="#letter-W">W</a>
+        <a href="#letter-X">X</a>
+        <a href="#letter-Y">Y</a>
+        <a href="#letter-Z">Z</a>
+    </div>
+
+    <h1>Elenco Domande e Risposte</h1>
+
+    <div class="faq-container" id="faq-container">
+        <div class="faq-item">
+            <div class="question">A cosa ci si riferisce con l'affermazione: regole di lettura che permettono di
+                tradurre le informazioni contenute nell’mRNA in una sequenza di amminoacidi delle proteine?</div>
+            <div class="answer">Al codice genetico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">A cosa ci si riferisce quando si afferma che i geni eucariotici contengono esoni?
+            </div>
+            <div class="answer">AI fatto che i geni eucariotici contengono sequenze codificanti, gli esoni, frammiste a
+                sequenze non codificanti, gli introni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">A cosa è dovuta la ridondanza del codice genetico?</div>
+            <div class="answer">AI fatto che l’appaiamento tra codone e anticodone è oscillante ed è accurato solo per
+                le prime due basi della tripletta del codone</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">A livello del nucleolo avviene la sintesi di?</div>
+            <div class="answer">RNA ribosomiali</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">A partire da geni per RNA ribosomilae, le RNA polimerasi possono?</div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">A volte la sequenza di DNA subisce una mutazione e un'adenina è appaiata con una
+                citosina. Perché questa interazione risulta instabile?</div>
+            <div class="answer">I gruppi chimici che formano i legami idrogeno sono nelle posizioni sbagliate</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Alla fine della replicazione del DNA i cromatidi fratelli sono tenuti insieme da?
+            </div>
+            <div class="answer">coesine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">All’inizio della mitosi, avviene la condensazione dei cromosomi ad opera delle
+                condensine. Questo processo è coadiuvato da?</div>
+            <div class="answer">Dal complesso M-Cdk che fosforila le condensine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Charles Darwin provò a spiegare il meccanismo con il quale le specie evolvono; quale
+                teoria propose?</div>
+            <div class="answer">Egli propose la teoria dell’evoluzione delle specie mediante la selezione naturale</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cos'è un introne?</div>
+            <div class="answer">Una sequenza di RNA che viene rimossa durante il processamento di una molecola di RNA
+                nel nucleo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa sono i geni X-linked?</div>
+            <div class="answer">I geni presenti sul cromosoma X, come i geni responsabili della percezione dei colori,
+                della proteina muscolare distrofina e della coagulazione del sangue</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è il fenotipo?</div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è il genotipo?</div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è la deriva genica?</div>
+            <div class="answer">La deriva genetica è l'insieme dei cambiamenti casuali nelle frequenze alleliche da una
+                generazione all’altra, in altre parole è la riduzione casuale della frequenza di un allele che causa
+                alterazioni nelle frequenze alleliche delle generazioni successive</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è la selezione direzionale?</div>
+            <div class="answer">Con il termine di selezione direzionale si intende la selezione che ha l’effetto di
+                promuovere un carattere estremo, aumentarne la frequenza nella popolazione, fino a rimpiazzare il
+                precedente valore medio di quel carattere nella popolazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è la selezione divergente?</div>
+            <div class="answer">Con il termine di selezione divergente si intende la selezione naturale che favorisce i
+                fenotipi estremi, rispetto ai fenotipi intermedi.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è l’anticodone?</div>
+            <div class="answer">L’anticodone è la tripletta di basi nucleotidiche presente sul tRNA complementare a
+                quella presente sul mRNA (il codone) e che si appaia con esso</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è l’effetto del fondatore?</div>
+            <div class="answer">L’ effetto del fondatore è un processo che si verifica quando si ha una perdita parziale
+                della variabilità genetica in una popolazione che si è accresciuta a partire da un piccolo numero di
+                individui</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è l’ubiquitina?</div>
+            <div class="answer">Una proteina segnale che si lega ad altre proteine e ne indica la degradazione da parte
+                del proteosoma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è un virus?</div>
+            <div class="answer">Un'entità biologica con caratteristiche di parassita obbligato</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che cosa è una specie?</div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Che tipo di RNA è l'rRNA?</div>
+            <div class="answer">È I'RNA che concorre alla formazione del ribosoma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come avviene un legame covalente?</div>
+            <div class="answer">Attraverso la condivisione di elementi tra più atomi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come il cariotipo per i cromosomi sessuali nella sindrome di Klinefelter?</div>
+            <div class="answer">47,xxY</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come possono essere i ribosomi?</div>
+            <div class="answer">I ribosomi possono essere sia associati al reticolo endoplasmatico che liberi nel
+                citoplasma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come si chiama la struttura dinamica durante la metafase della mitosi in cui i
+                cromosomi sono allineati sul piano equatoriale?</div>
+            <div class="answer">si chiama piastra metafasica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come si suddividono le cellule in relazione alla modalità di reperimento dei composti
+                nutritivi?</div>
+            <div class="answer">Autotrofe ed eterotrofe</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come si suddividono le cellule in relazione alla modalità di reperimento dei composti
+                nutritivi?</div>
+            <div class="answer">Autotrofe ed eterotrofe</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come si suddividono le cellule in relazione alla presenza di membrane?</div>
+            <div class="answer">Eucariote e procariote</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Come viene mantenuta la proteasi separasi prima dell’anafase e mediante quale
+                meccanismo?</div>
+            <div class="answer">La separasi viene mantenuta in uno stato inattivo durante la profase, la prometafase e
+                la metafase, da una proteina inibitrice che si chiama securina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Comprendono cheratina e neurofilamenti?</div>
+            <div class="answer">Filamenti intermedi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa contraddistingue un organismo aerobio rispetto a uno anaerobio?</div>
+            <div class="answer">La necessità di vivere in un ambiente contenente 02</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa contriddistingue un organismo aerobio rispetto a uno anaerobio?</div>
+            <div class="answer">La necessità di vivere in un ambiente contenente 02</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa indica la valenza di un elemento?</div>
+            <div class="answer">Il numero di elettroni dell'orbitale esterno in grado di formare legami</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa si intende con il termine “reading frame” riferito all'mRNA?</div>
+            <div class="answer">Il fatto che i codoni sono letti in sequenza partendo da un punto preciso dell’mRNA, per
+                tanto il modulo di è unico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa sono gli istoni?</div>
+            <div class="answer">Proteine ricche di aminoacidi carichi positivamente</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa sono i fattori di trascrizione?</div>
+            <div class="answer">Proteine modulari con più di un dominio che legano il DNA e un attivatore/repressore
+                della trascrizione per aumentarne l'efficienza</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa sono i prioni?</div>
+            <div class="answer">Le risposte sono tutte vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa sono i prioni?</div>
+            <div class="answer">Le risposte sono tutte vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa succede se una membrana viene bucata con una punta?</div>
+            <div class="answer">l'apertura prodotta si richiude</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa vuol dire che il codice genetico è ridondante?</div>
+            <div class="answer">Il fatto che diversi amminoacidi possono essere legati da uno stesso tipo di tRNA,
+                corrispondente ad un codone</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa è il codice genetico?</div>
+            <div class="answer">Le 64 triplette che specificano i 20 aminoacidi delle proteine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa è la fase M del ciclo cellulare?</div>
+            <div class="answer">Il periodo di tempo in cui la cellula va incontro a mitosi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa è la mitosi?</div>
+            <div class="answer">Il processo di divisione nucleare dal quale si ottengono due nuclei figli con lo stesso
+                patrimonio genetico del nucleo della cellula madre</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Cosa è la sinapsi che si verifica durante la meiosi?</div>
+            <div class="answer">L'appaiamento dei cromosomi omologhi in profase I</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Crei delle cellule che esprimono una forma di cdcé che non può essere fosforilata e
+                quindi non può essere degradata. Quale sarà la conseguenza più probabile di questo cambiamento?</div>
+            <div class="answer">Le cellule non riusciranno a completare la sintesi del DNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Da cosa si sono ricavate le evidenze a sostegno della teoria dell’evoluzione proposta
+                da Charles Darwin?</div>
+            <div class="answer">Tutte le risposte sono corrette</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Da quale tipo di RNA polimerasi il DNA viene trascritto in RNA messaggero nelle
+                cellule eucariotiche?</div>
+            <div class="answer">Dalla RNA polimerasi II</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Denaturazione di una proteina significa che?</div>
+            <div class="answer">Si perde momentaneamente la sua attività biologica, che viene poi recuperata in
+                condizioni favorevoli</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Dove vengono sintetizzate la maggior parte delle membrane nella cellula?</div>
+            <div class="answer">nel reticolo endoplasmatico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Durante la trascrizione la molecola di mRNA cresce?</div>
+            <div class="answer">In direzione 5' - 3'</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Generalmente cosa inattiva la proteina Rb e come questo porta alla fase S?</div>
+            <div class="answer">I mitogeni facilitano la fosforilazione di Rb, che fosforilata si inattiva e libera un
+                regolatore della trascrizione che così può attivare la trascrizione di geni per entrare in fase S</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gli acidi grassi sono...?</div>
+            <div class="answer">acidi carbossilici dotati di lunghe code idrocarburiche.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gli acidi nucleici sono tenuti insieme da legami fosfodiesterici (o fosfodiestere) che
+                si formano tra?</div>
+            <div class="answer">Un gruppo fosfato e due zuccheri</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gli esperimenti (di Avery, Hersey e Chase) hanno avuto grande importanza perché?</div>
+            <div class="answer">Hanno individuato nel DNA la natura di portatore dell'informazione genetica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gli istoni?</div>
+            <div class="answer">fanno parte della cromatina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gli RNA messaggeri vengono tradotti in proteine?</div>
+            <div class="answer">Nel citoplasma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Grazie a quali processi la meiosi consente di ottenere una notevole variabilità del
+                patrimonio genetico?</div>
+            <div class="answer">Tutte le risposte sono corrette</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Gregor Mendel scelse la pianta del Pisum sativum per i suoi studi di genetica; quali
+                erano le sette caratteristiche fenotipiche di cui creò delle pure (generazione parentale) con caratteri
+                fenotipici alternativi della pianta che lui scelse di studiare?</div>
+            <div class="answer">nghe), lunghezza dello stelo (lungo o corto), posizione del fiore (assiale o terminale)
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Guardando le code idrofobiche, quale di questi fosfolipidi è quello che da più
+                fluidità alla membrana?</div>
+            <div class="answer">15 carboni e 2 doppi legami</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I complessi della catena di trasporto degli elettroni si trovano?</div>
+            <div class="answer">Nella membrana mitocondriale interna</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I fosfolipidi differiscono dai trigliceridi in quanto i primi...?</div>
+            <div class="answer">sono anfipatici.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I fosfolipidi presentano una porzione della molecola idrofila perché?</div>
+            <div class="answer">Uno degli acidi grassi è sostituito da un fosfato legato a una colina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I geni che si trovano nelle regioni di eterocromatina?</div>
+            <div class="answer">vengono spenti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I gradienti elettrochimici?</div>
+            <div class="answer">sono il risultato delle differenze di concentrazione e delle cariche elettriche ai 2
+                lati della membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I lipidi di membrana sono capaci di svolgere diversi movimenti, quale di questi non
+                avviene spontaneamente?</div>
+            <div class="answer">passaggio da uno strato all'altro della membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I mitocondri?</div>
+            <div class="answer">presentano una doppia membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I perossisomi sono organuli cellulari che?</div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I polimeri possono essere degradati nei monomeri che li compongono mediante?</div>
+            <div class="answer">Idrolisi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I prioni?</div>
+            <div class="answer">sono proteine mal ripiegate</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I recettori accoppiati ai canali ionici?</div>
+            <div class="answer">aprono o chiudono il canale dopo il legame con il ligando</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I trasportatori ABC?</div>
+            <div class="answer">utilizzano l'energia dell'ATP per trasportare ioni e molecole</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">I trasportatori, al contrario dei canali ionici funzionano?</div>
+            <div class="answer">legandosi ai soluti con siti specifici</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il ciclo cellulare degli eucarioti è una serie ordinata di eventi grazie ai quali la
+                cellula duplica il suo contenuto e poi si divide in due per riprodursi. Di quante fasi si compone il
+                ciclo cellulare e in che ordine temporale si susseguono?</div>
+            <div class="answer">Il ciclo cellulare degli eucarioti comprende 4 fasi: G1, S, G2, e M</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il codice genetico trasforma la sequenza dei nucleotidi in 20 aminoacidi, ed è dato
+                dalla?</div>
+            <div class="answer">combinazione di 4 nucleotidi in gruppi di 3 elementi, tale per cui, 4 per 4 per 4,
+                genera 64 codoni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il codice genetico viene definito ridondante in quanto?</div>
+            <div class="answer">quasi tutti gli amminoacidi sono codificati da più di un codone con l'eccezione di
+                triptofano e metionina.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il codice genetico è ridondante e i codoni che codificano per lo stesso amminoacido
+                sono detti?</div>
+            <div class="answer">sinonimi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il complesso M-Cdk inizia ad accumularsi già nella fase G2 ma è inattivo; quando viene
+                attivato e come?</div>
+            <div class="answer">Il complesso M-Cdk subisce una rapida attivazione nei primi stadi della mitosi da parte
+                della proteina fosfatasi Cdc25</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il principale centro di organizzazione dei microtubuli nelle cellule animali è?</div>
+            <div class="answer">Il centrosoma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il sesso nell’uomo è determinato dai geni presenti sui cromosomi sessuali. Come sono
+                dette le coppie dei cromosomi diverse da quelle sessuali? Quante sono nell’uomo? quali sono i cromosomi
+                che determinano il sesso maschile e quali quello femminile?</div>
+            <div class="answer">Autosomiche; 22 coppie; XY; XX</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il signalling paracrino avviene?</div>
+            <div class="answer">tra cellule vicine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il termine “junk DNA” si riferisce a?</div>
+            <div class="answer">sequenze di DNA che non contengono geni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il trasporto attivo?</div>
+            <div class="answer">Sfrutta l'ATP come fonte di energia per il movimento delle sostanze</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il trasporto passivo?</div>
+            <div class="answer">Sfrutta l'energia del gradiente elettrochimico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Il tRNA che ha l’anticodone lega un determinato amminoacido che viene legato alla
+                catena polipeptidica nascente; dove è legato l’amminoacido?</div>
+            <div class="answer">L’amminoacido è legato all’estremità 3 primo del tRNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Ilcrossing-over è un processo che?</div>
+            <div class="answer">Porta ad un aumento della variabilità genetica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Ilegami peptidici che formano una proteina si costituiscono coinvolgendo?</div>
+            <div class="answer">Un gruppo carbossilico terminale e un gruppo aminico terminale</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">In quale caso piante o animali possono essere definiti transgenici?</div>
+            <div class="answer">Quando il DNA delle loro cellule ha incorporato un gene estraneo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">In una cellula eucariotica non troviamo DNA?</div>
+            <div class="answer">Nei ribosomi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">In una molecola di DNA si trova un gruppo fosfato?</div>
+            <div class="answer">Lungo ogni filamento, alternato a uno zucchero</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Iribosomi hanno tre siti dove vengono legati i tRNA, e sono detti?</div>
+            <div class="answer">Per i tRNA ci sono tre siti di legame A, Pe E</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Jean-Baptiste Lamarck provò a spiegare per la prima volta il meccanismo con il quale
+                le specie evolvono; quale teoria propose?</div>
+            <div class="answer">Egli propose la teoria dell’ereditarietà dei caratteri acquisiti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L' espressione 9 + 2 fa riferimento?</div>
+            <div class="answer">Alla disposizione dei microtubuli all'interno delle ciglia e dei flagelli</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'accettore finale degli elettroni della catena di trasporto degli elettroni che
+                svolge la sua funzione nella fosforilazione ossidativa è?</div>
+            <div class="answer">L'ossigeno</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'allungamento di un nuovo filamento di DNA durante la replicazione avviene?c</div>
+            <div class="answer">AI terminale 3 primo con liberazione di due fosfati</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'anabolismo sta al catabolismo come?</div>
+            <div class="answer">Endoergonico sta a esoergonico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'anemia falciforme è un esempio di malattia ereditaria. Gli individui con questa
+                malattia hanno globuli rossi di forma anomala (a falce) a causa di una mutazione del gene della
+                beta-globina. Qual è la natura di questo cambiamento?</div>
+            <div class="answer">Il cambiamento in un nucleotide</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'emofilia è un tratto umano recessivo legato all'X. Quali saranno le conseguenze se
+                una portatrice femmina (eterozigote per il tratto) si accoppia con un maschio non affetto?</div>
+            <div class="answer">Metà dei loro figli maschi avrà emofilia</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'epigenetica si riferisce a cambiamenti..?</div>
+            <div class="answer">nell'espressione genica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'esocitosi prevede?</div>
+            <div class="answer">Il rilascio del materiale contenuto in una vescicola all'esterno della cellula</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'idrolisi da GTP a GDP compiuta dalla tubulina?</div>
+            <div class="answer">permette il comportamento dei microtubuli chiamato instabilità dinamica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'inibizione della fosfatasi attivatrice cde25 durante il ciclo cellulare?</div>
+            <div class="answer">blocca l'entrata in mitosi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L'osmosi è un tipo di?</div>
+            <div class="answer">diffusione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La batteriorodopsina funziona come?</div>
+            <div class="answer">uniporto</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La diffusione facilitata ed il trasporto attivo?</div>
+            <div class="answer">Richiedono entrambi l'intervento di proteine trasportatrici</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La legge della dominanza (prima legge di Mendel) afferma che?</div>
+            <div class="answer">Dall’incrocio tra due linee pure che differiscono per un solo carattere, si ottiene una
+                FI in cui gli individui manifestano uno solo dei due fenotipi, vale a dire quello dominante</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La legge della segregazione degli alleli (seconda legge di Mendel) afferma che?</div>
+            <div class="answer">Gli alleli di un dato gene si separano durante la formazione dei gameti, infatti,
+                ciascun carattere è determinato da un fattore (gene) di cui esistono due forme alternative (allele)
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La legge dell’assortimento indipendente (o terza legge di Mendel) afferma che?</div>
+            <div class="answer">Due fattori, responsabili di due caratteri diversi, assortiscono indipendentemente l’uno
+                dall’altro</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La maggior parte dell'ATP prodotto durante la respirazione cellulare viene generato?
+            </div>
+            <div class="answer">Dalla fosforilazione ossidativa</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La membrana cellulare è fragile ed ha bisogno di un supporto interno di proteine
+                fibrose: questo supporto si chiama?</div>
+            <div class="answer">citoscheletro</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La membrana cellulare è fragile ed ha bisogno di un supporto interno di proteine
+                fibrose: questo supporto si chiama?</div>
+            <div class="answer">citoscheletro</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La membrana plasmatica delle cellule eucariotiche presenta tutte le seguenti funzioni,
+                tranne una. Quale?</div>
+            <div class="answer">È il luogo dove avviene la sintesi proteica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La membrana plasmatica si trova?</div>
+            <div class="answer">Sia nelle cellule procariotiche che eucariotiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La mutazione non senso consiste nella?</div>
+            <div class="answer">sostituzione di un codone codificante con uno di stop</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La pleiotropia è?</div>
+            <div class="answer">L'effetto fenotipico multiplo generato da un solo gene</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La pompa sodio potassio funziona?</div>
+            <div class="answer">utilizzando ATP</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La profase della meiosi I è suddivisa in diversi stadi: Diacinesi: scomparsa del
+                nucleolo e della membrana nucleare e formazione del fuso mitotico (A); Leptotene: comparsa dei cromosomi
+                sotto forma di lunghi filamenti singoli sottili (lepto, infatti significa sottile) (B); Zigotene:
+                (zygotos che significa unito assieme) quando avviene l’appaiamento dei cromosomi omologhi (sinapsi) (E);
+                Pachitene: accorciamento e ispessimento dei cromosomi: le coppie di cromosomi sono dette bivalenti (D);
+                Diplotene: sdoppiamento dei cromosomi in cromatidi, con formazione delle tetradi e crossing over (C);
+                Qual è la loro corretta sequenza temporale?</div>
+            <div class="answer">BEDCA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La replicazione del DNA viene definita semiconservativa perché?</div>
+            <div class="answer">Solo un filamento della doppia elica figlia è derivato direttamente dalla molecola della
+                cellula madre</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La replicazione del DNA è considerata un processo semiconservativo perché...?</div>
+            <div class="answer">ciascuna molecola figlia di DNA è costituita da un filamento che deriva dalla molecola
+                di DNA di partenza e da un nuovo filamento.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La resa energetica della glicolisi rispetto alla respirazione aerobica è?</div>
+            <div class="answer">2 vs. 38 molecole di ATP per molecola di glucosio</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La sindrome di Klinefelter è un esempio di che tipo di mutazione?</div>
+            <div class="answer">Aneuploidia di un cromosoma sessuale</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La sindrome di Lesch-Nyhan è una rara malattia deteminata dall' allele recessivo di un
+                gene sul cromosoma X. Una donna, che ha un fratello maschio affetto da sindrome di Lesch-Nyhan, che
+                probabilità ha di essere portatrice?</div>
+            <div class="answer">50%</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La sindrome di Turner è un esempio di che tipo di mutazione?</div>
+            <div class="answer">Aneuploidia di un cromosoma sessuale</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La struttura 8 + 2 fa riferimento?</div>
+            <div class="answer">Nessuna delle risposte è corretta</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La struttura 9 + 1 fa riferimento?</div>
+            <div class="answer">Nessuna delle risposte è corretta</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La struttura 9 + 1 fa riferimento?</div>
+            <div class="answer">Nessuna delle risposte è corretta</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La struttura generale di un amminoacido è?</div>
+            <div class="answer">Un atomo di carbonio a cui sono legati un gruppo amminico, un gruppo carbossilico e un
+                gruppo R</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La struttura primaria di una proteina, formata da una o più catene polipeptidiche, è
+                definita da?</div>
+            <div class="answer">l'ordine di successione degli aminoacidi nelle catene polipeptidiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La trascrizione dell’RNA differisce dalla replicazione del DNA per alcuni aspetti
+                fondamentali?</div>
+            <div class="answer">Il filamento neo trascritto di RNA non rimane appaiato al DNA stampo ed è complementare
+                ad uno solo dei due filamenti di DNA, quello che contiene l’informazione genetica, che non ha sempre lo
+                stesso orientamento.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La trasmissione dell'informazione importante per la regolazione genica dalla cellula
+                madre alla cellula figlia — senza alterazione della sequenza nucleotidica di partenza — è detta eredità
+                -. Questo tipo di eredità può evidenziarsi con una modifica covalente, la » che interessa le basi di
+                citosina, le quali tipicamente spengono la trascrizione di un gene.</div>
+            <div class="answer">epigenetica, metilazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">La velocità della glicolisi è?</div>
+            <div class="answer">Stimolata dall'ADP</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le cellule connesse da giunzioni serrate (dette anche strette) hanno generalmente la
+                funzione di?</div>
+            <div class="answer">Sigillare alcune cavità corporee, impedendo il passaggio di fluidi e sostanze tra le
+                cellule</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le cellule possono ricevere segnali?</div>
+            <div class="answer">molto diversi (chimici, elettrici, fisici, etc)</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le estremità di un filamento di DNA sono individuate dal termine 5' e 3'?</div>
+            <div class="answer">Dal numero dell'atomo di carbonio dello zucchero che porta un gruppo terminale</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le giunzioni che permettono il trasporto di molecole tra due cellule vegetali
+                adiacenti sono?</div>
+            <div class="answer">I plasmodesmi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le giunzioni serrate hanno generalmente la funzione di?</div>
+            <div class="answer">Sigillare alcune cavità corporee, impedendo il passaggio di materiali tra le cellule
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le modificazioni epigenetiche sono?</div>
+            <div class="answer">Modificazioni del DNA come l'aggiunta di gruppi metile alle citosine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le molecole di H2O, in forma liquida o solida, da che tipo di legame sono tenute
+                insieme (proprietà coesive e adesive)?</div>
+            <div class="answer">Idrogeno</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le pompe del sodio/potassio sulla membrana sono esempi di?</div>
+            <div class="answer">pompe ATP-dipendenti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le proteine che selezionano i soluti principalmente in base alle dimensioni e alla
+                carica elettrica sono?</div>
+            <div class="answer">canali ionici</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le proteine che usano il movimento di un soluto secondo gradiente per fornire energia
+                per il trasporto contro gradiente di un secondo soluto si chiamano?</div>
+            <div class="answer">trasportatori accoppiati</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le proteine con struttura quaternaria?</div>
+            <div class="answer">sono formate da almeno 2 subunità distinte</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Le proteine scaffold?</div>
+            <div class="answer">organizzano gruppi di molecole della stessa via di segnalazione in complessi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’amminoacido è legato al 3’ del tRNA da particolari enzimi chiamati
+                aminoacil-tRNA-sintetasi; quanti sono i tipi di aminoacil-tRNA-sintetasi?</div>
+            <div class="answer">Esistono 20 tipi aminoacil-tRNA-sintetasi, una sintetasi specifica per ciascun
+                amminoacido</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’espressione genica ha vari punti di controllo: controllo della maturazione dell’RNA
+                (A); controllo della dell’attività proteica e degradazione della proteina (B); controllo del trasporto e
+                della localizzazione dell’RNA e della degradazione dell’'mRNA (C); controllo della traduzione (D);
+                controllo della trascrizione (E); in quali di questi controlli interviene il proteosoma, in quale
+                l’ubiquitina?</div>
+            <div class="answer">Il proteosoma in B; l’ubiquitina in B</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’espressione genica ha vari punti di controllo: controllo della maturazione dell’RNA
+                (A); controllo della dell’attività proteica e degradazione della proteina (B); controllo del trasporto e
+                della localizzazione dell’RNA e della degradazione dell’'mRNA (C); controllo della traduzione (D);
+                controllo della trascrizione (E); quali di questi controlli avvengono nel nucleo e quali nel citoplasma?
+            </div>
+            <div class="answer">EAC nel nucleo; DB nel citoplasma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’espressione genica ha vari punti di controllo: controllo della maturazione dell’RNA
+                (A); controllo della dell’attività proteica e degradazione della proteina (B); controllo del trasporto e
+                della localizzazione dell’RNA e della degradazione dell’mRNA (C); controllo della traduzione (D);
+                controllo della trascrizione (E); in quali di questi controlli interviene il proteosoma, in quale
+                l’ubiquitina?</div>
+            <div class="answer">Nessuna delle risposte è corretta</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’RNA polimerasi è l'enzima che sintetizza il trascritto di RNA e?</div>
+            <div class="answer">Aggiunge un nucleotide alla volta in direzione 5°-3’ utilizzando i ribonucleotidi ATP,
+                CTP, UTP e GTP</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">L’uracile è?</div>
+            <div class="answer">Una pirimidina, fa’ da base complementare all’adenina e fa due legami idrogeno con la
+                l’adenina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Mediante quale meccanismo cellulare i mitogeni facilitano l’inattivazione di Rb?</div>
+            <div class="answer">I mitogeni attivano una cascata di segnalazione cellulare che attiva i complessi G1-Cdk
+                e G1/S-Cdk che fosforilano la proteina Rb, e la inattivano.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Mediante quale meccanismo l’APC (dall’inglese anaphase promoting complex) induce
+                degradazione del complesso M-CDK che spinge la cellula ad uscire dalla mitosi?</div>
+            <div class="answer">L’APC lega molecole di ubiquitina alle cicline del complesso M-CDK e in questo modo le
+                indirizza verso degradazione attuata dal complesso del proteosoma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Negli stadi iniziali della fase M, il cinetocore si lega a?</div>
+            <div class="answer">I microtubuli del fuso mitotico (microtubuli del cinetocore) e al centromero di ciascun
+                cromatidio</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nei primi stadi della fase M, i due cromatidi fratelli di un cromosoma sono tenuti
+                insieme da?</div>
+            <div class="answer">I due cromatidi fratelli sono tenuti insieme dalle coesine che formano anelli che
+                cingono i cromatidi fratelli</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nel 1961 gli scienziati Crick e Brenner dimostrarono sperimentalmente che?</div>
+            <div class="answer">La sequenza dei quattro nucleotidi di un mRNA viene letta per gruppi consecutivi di tre
+                elementi che costituiscono una combinazione di tre ribonucleotidi dette codoni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nel caso di un sale (ad es. NaCl), che tipo di legame c'è tra gli atomi di Na e CI?
+            </div>
+            <div class="answer">Ionico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nel cotrasporto?</div>
+            <div class="answer">il trasporto di un soluto secondo il suo gradiente elettrochimico rende possibile il
+                trasporto di un altro soluto contro gradiente</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nel processo di trasduzione del segnale?</div>
+            <div class="answer">la cellula converte il messaggio della molecola segnale in un segnale intracellulare
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nella cellula eucariotica troviamo il DNA, oltre che nel nucleo?</div>
+            <div class="answer">Nei mitocondri</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nella segnalazione endocrina</div>
+            <div class="answer">le ghiandole rilasciano molecole segnale nel sangue</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nella struttura a doppio filamento del DNA...?</div>
+            <div class="answer">i due filamenti sono tenuti assieme da legami idrogeno.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nelle cellule animali, il DNA è contenuto?</div>
+            <div class="answer">Nel nucleo e nei mitocondri</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Nelle proteine, la struttura primaria è definita?</div>
+            <div class="answer">dalla composizione in amminoacidi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Oggi si sa che l’assortimento indipendente (seconda legge di Mendel) non avviene
+                sempre; quale meccanismo spiega questa evidenza?</div>
+            <div class="answer">I gameti ricombinanti si formano con frequenza inferiore rispetto alla previsione della
+                seconda legge di Mendel (atteso rapporto 4:1 alla F2) perché il crossing over avviene più raramente tra
+                loci vicini</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Oggi si sa che l’assortimento indipendente (terza legge di Mendel) non avviene sempre;
+                quando si verifica questa condizione?</div>
+            <div class="answer">Tutte le risposte sono corrette</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Oltre ad anidride carbonica e acqua, il catabolismo delle proteine dà come prodotto
+                finale?</div>
+            <div class="answer">Ammoniaca poi trasformata in urea</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Ordina le seguenti strutture da quella con il diametro più piccolo a quella con il
+                diametro più grande?</div>
+            <div class="answer">filamenti di actina-filamenti intermedi-microtubuli-miofibrille</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Per ognuno dei processi elencati indica lo stadio preciso della fase M in cui avviene:
+                Allineamento dei cromosomi all'equatore del fuso mitotico: s Disgregazione dell'involucro nucleare e
+                collegamento dei microtubuli del fuso con i cromosomi: ; Suddivisione della cellula in due parti: î
+                Ricostituzione dell'involucro nucleare: ; Condensazione dei cromosomi, separazione dei due centrosomi e
+                inizio dell'assemblaggio del fuso mitotico: ; Separazione dei cromatidi fratelli?</div>
+            <div class="answer">metafase; prometafase; citochinesi; telofase; profase; anafase</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Per passare dalla fase M alla fase G1 il complesso di controllo del ciclo cellulare?
+            </div>
+            <div class="answer">Deve inattivare tutti i complessi S-Cdk e M-Cdk</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Per una molecola priva di carica, la direzione del trasporto passivo attraverso una
+                membrana è determinata solamente?</div>
+            <div class="answer">dal suo gradiente di concentrazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Perchè nella PCR si usa la polimerasi Taq del batterio Thermus aquaticus?</div>
+            <div class="answer">Perchè la polimerasi Taq è stabile al calore</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Perché il materiale genetico di una cellula possa essere usato, prima l'informazione
+                viene copiata dal DNA in una sequenza nucleotidica di RNA in un processo chiamato . Vengono prodotti
+                vari tipi di RNA, ciascuno con diverse funzioni. Tra di essi, le molecole di codificano per le proteine,
+                le molecole di agiscono come adattatori per la sintesi delle proteine, le molecole di sono componenti
+                integrali dei ribosomi e le molecole di sono importanti nello splicing dei trascritti di RNA?</div>
+            <div class="answer">trascrizione, mRNA, tRNA, rRNA, snRNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Perché le reazioni redox sono un mezzo per trasferire energia all'interno delle
+                cellule?</div>
+            <div class="answer">Perché la sostanza che si ossida trasferisce protoni ed elettroni ad altre molecole come
+                NAD e FAD</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il fenomeno chiave che si può considerare alla base del processo di
+                speciazione?</div>
+            <div class="answer">L’isolamento riproduttivo, cioè la possibilità che due specie imparentate convivano
+                senza che si verifichi rimescolamento genetico tra gli individui delle due popolazioni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il gene biologicamente più importante presente nel cromosoma Y umano? Quali
+                sono i suoi effetti?</div>
+            <div class="answer">Il gene SRY che funziona da interruttore genetico per lo sviluppo dei testicoli nel
+                feto, che producono gli ormoni sessuali</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il meccanismo d’innesco che dà avvio all’anafase?</div>
+            <div class="answer">L’inattivazione della proteina inibitrice della proteasi separasi denominata securina;
+                la securina viene degradata dal proteosoma su indicazione del complesso ubiquitina ligasi APC/C
+                (dall’inglese anaphase- promoting complex or cyclosome)</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il principale anione che neutralizza le cariche positive nell'ambiente esterno?
+            </div>
+            <div class="answer">Cl-</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il processo alla base della crescita di un organismo e del ricambio delle
+                cellule nei tessuti?</div>
+            <div class="answer">La mitosi, processo alla base della riproduzione asessuata</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il processo alla base della variabilità genetica in una specie che si riproduce
+                con riproduzione sessuata?</div>
+            <div class="answer">La meiosi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il processo biologico alla base della sindrome di Down?</div>
+            <div class="answer">La non-disgiunzione dei cromosomi omologhi della coppia 21 nella meiosi durante la
+                gametogenesi della linea germinale femminile</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è il vantaggio evolutivo della riproduzione sessuata?</div>
+            <div class="answer">Il vantaggio evolutivo consiste nell’aumentare la variabilità genetica, dovuta al fatto
+                che viene generata una discendenza con nuove combinazioni cromosomiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è l'unità fondamentale della vita?</div>
+            <div class="answer">La cellula</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è l'unità fondamentale della vita?</div>
+            <div class="answer">La cellula</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la "regola di Chargaff"?</div>
+            <div class="answer">Il numero di adenine è uguale a quello di timine e il numero di guanine è uguale a
+                quello di citosine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la corretta definizione di organismo eterotrofo?</div>
+            <div class="answer">Non utilizza composti oganici come nutrimento</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la frazione di geni che due fratelli hanno in comune tra loro?</div>
+            <div class="answer">50%</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione dei telomeri?</div>
+            <div class="answer">Sono sequenze che permettono ai cromosomi lineari di essere duplicati senza perdere
+                informazioni genetiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione della DNA elicasi?</div>
+            <div class="answer">Srotolare la doppia elica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione della DNA polimerasi?</div>
+            <div class="answer">Polimerizzare i nucleotidi aggiungendoli al terminale 3' della catena polinucleotidica
+                in via di formazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione principale dei lisosomi?</div>
+            <div class="answer">La digestione intracellulare</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione principale dei ribosomi?</div>
+            <div class="answer">La sintesi di proteine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione principale del complesso di Golgi?</div>
+            <div class="answer">Lo smistamento delle sostanze nella cellula</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la funzione principale del reticolo endoplasmatico rugoso?</div>
+            <div class="answer">La sintesi di proteine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la sequenza corretta?</div>
+            <div class="answer">invio della molecola segnale, ricezione, trasduzione del segnale e risposta cellulare
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è la struttura dei RNA transfer (tRNA)?</div>
+            <div class="answer">I tRNA sono formati da un singolo filamento di RNA di 70-80 nucleotidi che si ripiega
+                per assumere una forma specifica con quattro diverse anse (o loop), anche detta struttura a quadrifoglio
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è lo stato della proteina Rb in una cellula in G0 o quando la cellula è privata
+                di mitogeni?</div>
+            <div class="answer">La proteina è defosforilata ed attiva, in questo stato Rb inattiva un regolatore della
+                trascrizione che impedisce la trascrizione di geni per l’entrata nella fase S</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Qual è processo che innesca l’anafase della mitosi?</div>
+            <div class="answer">L'anafase è innescata all’improvviso dalla rottura degli anelli delle coesine che
+                tengono insieme i cromatidi fratelli, che sono ora liberi di migrare verso i poli opposti, che sono ora
+                liberi di migrare verso i poli opposti trascinati dai microtubuli legati al centrosoma</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale affermazione sui cromosomi sessuali umani e sui geni che contengono è vera?
+            </div>
+            <div class="answer">Ci sono geni che i maschi hanno ma che le femmine non hanno</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale caratteristica riguardo i geni distingue i procarioti dagli eucarioti?</div>
+            <div class="answer">A differenza dei procarioti, i geni degli eucarioti contengono lunghe sequenze
+                interposte tra le sequenze codificanti.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti affermazioni non si riferisce ad una caratteristica simile nel
+                meccanismo di polimerizzazione di actina e tubulina?</div>
+            <div class="answer">La depolarizzazione avviene all'estremità più dei filamenti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti eventi NON si verifica durante l'interfase?</div>
+            <div class="answer">La condensazione della cromatina.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti ioni è più abbondante in una cellula di mammifero?</div>
+            <div class="answer">K+</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti organelli è circondato da una doppia membrana?</div>
+            <div class="answer">Nucleo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti termini/affermazioni non è associabile al trasporto attivo?</div>
+            <div class="answer">movimento secondo gradiente</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti tipi di mutazione non può avere luogo nella sequenza di un
+                promotore</div>
+            <div class="answer">non senso</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale dei seguenti è la struttura che ha permesso alla cellula di funzionare come
+                entità distinta?</div>
+            <div class="answer">La membrana plasmatica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazione relative ai fosfolipidi di membrana è sbagliata?
+            </div>
+            <div class="answer">Possono spostarsi rapidamente da un versante all'altro della membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazione relative ai fosfolipidi di membrana è sbagliata?
+            </div>
+            <div class="answer">Possiedono "code" idrofiliche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni descrive correttamente la differenza tra DNA e RNA?
+            </div>
+            <div class="answer">Il DNA viene replicato, mentre I'RNA viene tradotto.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni non compare fra le assunzioni dell'equilibrio di
+                Hardy-Weinberg?</div>
+            <div class="answer">In ogni locus devono essere presenti due alleli</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni non è corretta?</div>
+            <div class="answer">La mitosi è una divisione riduzionale ed è tipica delle cellule della linea germinale
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni relativa ai mitocondri NON è vera?</div>
+            <div class="answer">Sono verdi perchè contengono clorofilla</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni relative al codice genetico è corretta?</div>
+            <div class="answer">dei 64 codoni del codice genetico 61 codoni codificano per amminoacidi, uno di questi,
+                AUG anche per lo start della lettura, e i3 codoni UA A, UAG, e UGA codificano per il segnale di stop.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni relative all'RNA è corretta?</div>
+            <div class="answer">L’RNA polimerasi si lega alla sequenza di DNA detta promotore che non viene trascritta.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni relative alla trascrizione è corretta?</div>
+            <div class="answer">La trascrizione dell'RNA inizia in coincidenza di una sequenza di DNA detta promotore e
+                posta a -35 e a-10 del sito di inizio.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni relative alle proteine è corretta?</div>
+            <div class="answer">I lipidi ed i carboidrati sono legati alle proteine nel complesso del Golgi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni riguardante l'emivita dell'mRNA è falsa?</div>
+            <div class="answer">L'emivita della maggior parte degli mRNA eucariotici è superiore alle 24 ore</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni riguardo ai lipidi di membrana è VERA?</div>
+            <div class="answer">I lipidi di membrana si possono muovere all'interno dello strato della membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni riguardo ai lipidi di membrana è VERA?</div>
+            <div class="answer">I lipidi di membrana diffondono all'interno del piano della membrana</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni riguardo i procarioti è VERA?</div>
+            <div class="answer">Non hanno apparato di Golgi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sugli RNA transfer (tRNA) è falsa?</div>
+            <div class="answer">Possono variare gli amminoacidi che legano.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sui filamenti del citoscheletro è falsa?</div>
+            <div class="answer">I filamenti del citoscheletro sono tenuti insieme da legami covalenti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sui mitocondri è falsa?</div>
+            <div class="answer">Contengono i perossisomi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul citoscheletro è vera?</div>
+            <div class="answer">Sia i filamenti di actina che i microtubuli hanno una polarità con un'estremità che
+                cresce più dell'altra</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul glicocalice è falsa?</div>
+            <div class="answer">Gli oligosaccaridi del glicocalice sono molto simili e ordinati</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul modello a mosaico fluido è vera?</div>
+            <div class="answer">Le molecole dei fosfolipidi sono libere di muoversi lateralmente</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul reticolo endoplasmatico RE è falsa?</div>
+            <div class="answer">Gli ormoni steroidei sono sintetizzati nel RE ruvido</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul sistema UPR (risposta alle proteine mal
+                ripiegate) è falsa?</div>
+            <div class="answer">l'attivazione dell'UPR porta all'espressione di recettori per l'ubiquitina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sul trasporto nucleare è corretta?</div>
+            <div class="answer">I recettori di importazione nucleare si legano al segnale di localizzazione nucleare
+                sulla proteina e l'accompagnano all'ingresso del poro e lì le rilasciano</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sull'actina è falsa?</div>
+            <div class="answer">L'instabilità dinamica dei filamenti di actina è importante per il movimento</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulla fagocitosi nelle cellule animali è falsa?
+            </div>
+            <div class="answer">I fagociti sono importanti nell'intestino per assorbire particelle di cibo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulla replicazione del DNA è falsa?</div>
+            <div class="answer">il primer è una piccola molecola di DNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulla secrezione è vera?</div>
+            <div class="answer">La membrana di una vescicola secretoria si fonde con la membrana plasmatica e libera il
+                suo contenuto nello spazio extracellulare</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulla struttura dei microtubuli è falsa?</div>
+            <div class="answer">l'alfatubulina e la betatubulina sono legate covalentemente in un dimero</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulla termodinamica è vera?</div>
+            <div class="answer">L'energia libera può essere usata per compiere trasformazioni chimiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulle proteine mitocondriali è vera?</div>
+            <div class="answer">le proteine chaperone facilitano il passaggio delle proteine attraverso le membrane
+                mitocondriali</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulle proteine nel lume del RE è falsa?</div>
+            <div class="answer">alcune delle proteine del lume del RE possono posizionarsi sulla membrana plasmatica
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sulle vescicole che gemmano dal Golgi è falsa?</div>
+            <div class="answer">la clatrina è importante per legare e selezionare le proteine cargo per il trasporto
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni sullo splicing del pre-mRNA è falsa?</div>
+            <div class="answer">Si tratta di un processo comune nei procarioti.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è corretta?</div>
+            <div class="answer">I trasportatori del glucosio del dominio apicale delle cellule dell'epitelio intestinale
+                sono simporti</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è corretta?</div>
+            <div class="answer">Molte proteine sono comuni a tutti i tipi di cellule e sono dette costitutive o
+                dall’inglese housekeeping, cioè di manutenzione ordinaria.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è corretta?</div>
+            <div class="answer">Le proteine housekeeping, cioè di manutenzione ordinaria, includono le proteine per la
+                sintesi del DNA, dell'RNA, gli enzimi per la respirazione cellulare, per la glicolisi, e per tutti i
+                processi fondamentali che servono alla sospravvivenza della cellula in vita.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è corretta?</div>
+            <div class="answer">Le risposte sono tutte corrette</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è corretta? Le chinesine e le dineine?</div>
+            <div class="answer">si muovono in direzione opposta</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è errata</div>
+            <div class="answer">La meiosi genera cellule figlie geneticamente identiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è errata?</div>
+            <div class="answer">L’uomo ha 46 coppie di cromosomi, 44 coppie di autosomi e 1 coppia di cromosomi sessuali
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è falsa?</div>
+            <div class="answer">Il reclutamento dei complessi di riconoscimento dell'origine (ORC) è innescato dalla
+                S-Cdk.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è vera?</div>
+            <div class="answer">Normalmente la membrana del reticolo endoplasmatico è molto più estesa di quella
+                plasmatica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti affermazioni è vera?</div>
+            <div class="answer">Si pensa che la membrana nucleare derivi da un'invaginazione della membrana plasmatica
+                attorno al DNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti funzioni non è associata ai lisosomi?</div>
+            <div class="answer">degradazione dei perossidi e dell'acqua ossigenata</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti molecole o strutture non è importante per il movimento dei
+                flagelli?</div>
+            <div class="answer">il reticolo sarcoplasmatico</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti non è una condizione che ci si attende possa favorire la
+                speciazione allopatrica?</div>
+            <div class="answer">in una parte dell'areale di una specie compaiono individui tetraploidi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti proteine non è coinvolta direttamente nella formazione dei
+                lamellipodi?</div>
+            <div class="answer">miosina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti proteine non è coinvolta nel direzionare le vescicole di
+                trasporto alla membrana target?</div>
+            <div class="answer">le adattine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti proteine è coinvolta nel movimento sia delle ciglia sia delle
+                vescicole intracellulari?</div>
+            <div class="answer">Dineina</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti sequenze riflette l'ordine di posizioni che assume una proteina
+                destinata alla membrana plasmatica?</div>
+            <div class="answer">ER-Golgi-membrana plasmatica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti sostanze NON è prodotta con tecniche di DNA ricombinante a scopi
+                terapeutici?</div>
+            <div class="answer">Vaccino anti epatite B</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale delle seguenti strutture si accorcia durante la contrazione muscolare?</div>
+            <div class="answer">Il sarcomero</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste affermazioni sui lipidi è vera?</div>
+            <div class="answer">si sciolgono tutti in solventi apolari</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste condizioni può verificarsi a seguito di una mutazione puntiforme?
+            </div>
+            <div class="answer">Tutte le risposte sono vere</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste funzioni NON è propria delle membrane cellulari?</div>
+            <div class="answer">Movimento della cellula sul substrato</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste è una funzione del reticolo endoplasmatico liscio?</div>
+            <div class="answer">La degradazione di alcune sostanze tossiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste è una funzione del reticolo endoplasmatico liscio?</div>
+            <div class="answer">La sintesi di fosfolipidi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale di queste è una funzione del reticolo endoplasmatico liscio?</div>
+            <div class="answer">La sintesi di carboidrati e lipidi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale fra le seguenti affermazioni è corretta?</div>
+            <div class="answer">Per Charles Darwin l'evoluzione dipende dalla sopravvivenza e riproduzione differenziata
+                degli individui in dipendenza dalla variazione nei loro caratteri.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale fra le seguenti affermazioni è falsa?</div>
+            <div class="answer">l'evoluzione si riferisce ai cambiamenti genetici dei singoli individui durante la loro
+                vita</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale funzione tra quelle elencate non è una funzione mitocondriale?</div>
+            <div class="answer">glicolisi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale funzione tra quelle elencate non è una funzione nucleare?</div>
+            <div class="answer">beta-ossidazione degli acidi grassi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale importantissimo evento biologico ha modificato radicalmente la composizione
+                dell'atmosfera terrestre?</div>
+            <div class="answer">Lo sviluppo della fotosintesi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale importantissimo evento biologico ha modificato radicalmente la composizione
+                dell'atmosfera terrestre?</div>
+            <div class="answer">Lo sviluppo della fotosintesi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale molecola si lega al sito allosterico di un enzima?</div>
+            <div class="answer">Un inibitore non competitivo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale ruolo ha l’apposizione della coda di poli A al 3’ sulla stabilità dell'mRNA?
+            </div>
+            <div class="answer">Più è lunga la coda di poliA, più I'mRNA è stabile</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale terapia permette che individui affetti da fenilchetonuria non sviluppino ritardo
+                mentale?</div>
+            <div class="answer">La dieta appropriata da seguire in alcuni casi per tutta la vita</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale tipo di mutazione può variare con la trasmissione alle generazioni successive?
+            </div>
+            <div class="answer">le mutazioni frameshift</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale tipologia di molecola porta l'informazione trascritta dalla RNA polimerasi II?
+            </div>
+            <div class="answer">l'RNA messaggero</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quale tra le seguenti funzioni svolge PRNA messaggero (mRNA)?</div>
+            <div class="answer">trascrive l’informazione genetica contenuta del DNA stampo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali apparati citoscheletrici transitori assistono gli stadi finali della fase M?
+            </div>
+            <div class="answer">Due apparati citoscheletrici: il fuso mitotico, composto da microtubuli, che effettua la
+                mitosi e l’anello contrattile, composto da filamenti di actina e miosina, che effettua la citochinesi
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali caratteristiche sono usate per identificare i cromosomi nel cariotipo?</div>
+            <div class="answer">Bandeggiatura, lunghezza, posizione del centromero</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali delle seguenti affermazioni è sbagliata?</div>
+            <div class="answer">La meiosi ha due divisioni citoplasmatiche e porta alla formazione di quattro cellule
+                aploidi identiche</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali di queste strutture si trovano nello stesso organello?</div>
+            <div class="answer">la matrice e le creste</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali di questi meccanismi si definisce un controllo post-traduzionale della
+                espressione genica?</div>
+            <div class="answer">Degradazione della proteina;</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali di questi meccanismi si definisce un controllo post-traduzionale della
+                espressione genica?</div>
+            <div class="answer">Ripiegamento della proteina ad opera di chaperoni;</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali molecole eseguono la traduzione del linguaggio dei nucleotidi nel linguaggio
+                degli amminoacidi?</div>
+            <div class="answer">Tutte le risposte sono corrette</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali sono i fattori riconosciuti come associati ad un aumento di rischio per la
+                sindrome di Down?</div>
+            <div class="answer">L'età materna avanzata</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali sono i meccanismi che portano alla rottura degli anelli di coesine all’inizio
+                dell’anafase della mitosi?</div>
+            <div class="answer">Una proteasi, la separasi, rompe gli anelli delle coesine</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali tipi di mutazioni puntiformi possono essere indotti da errori nella replicazione
+                del DNA? (</div>
+            <div class="answer">tutte le mutazioni puntiformi</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quali tra le molecole o complessi elencati non sono associati alla membrana
+                plasmatica?</div>
+            <div class="answer">enzimi per la sintesi proteica</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quando inizia ad accumularsi il complesso M-Cdk, sebbene inattivo?</div>
+            <div class="answer">Il complesso M-Cdk inizia ad accumularsi già nella fase G2 dell’interfase, ma è ancora
+                inattivo</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quando un tratto legato all'X è recessivo, da chi hanno ereditato l'allele i maschi
+                che esprimono il tratto?</div>
+            <div class="answer">Hanno ricevuto l'allele recessivo dalle madri</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quando una sostituzione nucleotidica da luogo ad una sostituzione amminoacidica si
+                parla di?</div>
+            <div class="answer">mutazione di senso</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quante molecole di DNA contiene un cromosoma all'inizio della fase M?</div>
+            <div class="answer">Due molecole di DNA: ogni cromosoma condensato è formato da due cromatidi fratelli
+                identici, ciascuno costituito da una unica molecola di DNA</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quanti sono gli istoni all'interno dei nucleosomi?</div>
+            <div class="answer">8</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quanti sono i geni per i tRNA nell’uomo e per quanti anticodoni codificano?</div>
+            <div class="answer">Nell’uomo esistono 500 geni per i tRNA che codificano solo 48 anticodoni</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quanti sono i punti di controllo del ciclo cellulare e in quali fasi del ciclo
+                cellulare sono temporalmente collocati?</div>
+            <div class="answer">Sono tre; un primo punto di controllo è tra G1 e S; un secondo punto di controllo è G2 e
+                M; un terzo punto di controllo è nella anafase della mitosi della fase M</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quanti sono i tipi di microtubuli del fuso mitotico funzionalmente diversi durante la
+                prometafase della mitosi?</div>
+            <div class="answer">Sono 3: i microtubuli dell’aster, che legano il polo del fuso con la membrana cellulare;
+                i microtubuli del cinetocore che legano il centromero di ciascun cromatidio con il polo del fuso; i
+                microtubuli interpolari che legano i microtubuli dei due poli tra loro</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Quanti tipi di DNA hanno i batteri?</div>
+            <div class="answer">Due</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Se i complessi S-Cdk e M-Cdk non vengono inattivati alla fine della mitosi, cosa
+                accade?</div>
+            <div class="answer">La cellula non ha il tempo di accrescersi perché viene saltata la fase G1 e riparte un
+                nuovo ciclo cellulare</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Se in una molecola di DNA a doppio filamento la percentuale di C è pari a 15%, qual è
+                la percentuale di A?</div>
+            <div class="answer">35%</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Se in una molecola di DNA a doppio filamento la percentuale di C è pari a 30 %, qual è
+                la percentuale di T?</div>
+            <div class="answer">20%</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Se si incrociano due linee pure di pianta di Pisum sativum, una dominante (stelo
+                lungo) e una recessiva (stelo corto), che rappresentano la generazione parentale; che tipo di
+                generazione F1 si ottiene per il carattere dello stelo della pianta?</div>
+            <div class="answer">La FI è data da tutte piante con stelo lungo, che sono dette ibride</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Se si incrociano le discendi dell’incrocio di due linee pure di pianta di Pisum
+                sativum, per la lunghezza dello stelo definite generazione F1 ibride, che tipo di generazione F?2 si
+                ottiene per il carattere dello stelo della pianta?</div>
+            <div class="answer">La F2 è data da 3:4 con stelo lungo e 1:4 con stelo corto</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Sulla base della relazione tra frequenza di crossing-over e distanza tra due loci su
+                un cromosoma è stato possibile?</div>
+            <div class="answer">Costruire mappe per ogni cromosoma andando a posizionare gli alleli alle distanze
+                corrispondenti alle loro frequenze di ricombinazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Tutte le seguenti affermazioni sulle integrine sono corrette eccetto?</div>
+            <div class="answer">sono trasportatori</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Un acido grasso si definisce saturo?</div>
+            <div class="answer">Se non presenta doppi legami</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Un catalizzatore biologico che influenza la velocità di una reazione chimica senza
+                essere consumato dalla reazione stessa è un?</div>
+            <div class="answer">Enzima</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Un enzima accelera una reazione metabolica?</div>
+            <div class="answer">Abbassando l'energia di attivazione della reazione</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Un gruppo -OH è presente?</div>
+            <div class="answer">negli alcoli</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Un neurone ed un globulo bianco sono cellule diverse perchè?</div>
+            <div class="answer">Il neurone esprime alcuni mRNA che il globulo bianco non esprime</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Una cascata di proteina chinasi può amplificare un segnale intracellulare...?</div>
+            <div class="answer">attivando una chinasi in grado di indurre successivamente l'attivazione di numerose
+                proteine.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Una funzione degli acidi nucleici è di...?</div>
+            <div class="answer">codificare la sintesi proteica.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Una malattia causata da una delezione di una parte di cromosoma è la sindrome del
+                «cri-du chat» (pianto del gatto); quale cromosoma subisce la delezione?</div>
+            <div class="answer">Il cromosoma 5</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">Una malattia si definisce multifattoriale quando è causata?</div>
+            <div class="answer">da più geni che interagiscono con l'ambiente</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">è un tipo di riproduzione asessuata?</div>
+            <div class="answer">scissione binaria</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="question">é un tipo di riproduzione sessuata?</div>
+            <div class="answer">partenogenesi</div>
+        </div>
+
+
+
+        <!-- Continua con il resto delle domande -->
+        <!-- ... -->
+    </div>
+
+    <!-- Contenitore per entrambi i pulsanti -->
+    <div class="search-bar-container">
+        <div class="button-container">
+            <button id="button-a" onclick="window.location.href='aperte.html'">A</button>
+            <button id="search-toggle">&#128269;</button>
+        </div>
+        <div id="search-bar" class="hidden">
+            <input type="text" id="search-input" placeholder="Cerca una domanda...">
+        </div>
+    </div>
+
+    <script>
+        // Toggle visibilità della barra di ricerca
+        document.getElementById('search-toggle').addEventListener('click', function () {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        });
+
+        // Funzionalità di ricerca
+        document.getElementById('search-input').addEventListener('input', function () {
+            const searchQuery = this.value.toLowerCase();
+            const faqItems = document.querySelectorAll('.faq-item');
+
+            faqItems.forEach(item => {
+                const question = item.querySelector('.question').innerText.toLowerCase();
+                const answer = item.querySelector('.answer').innerText.toLowerCase();
+
+                if (question.includes(searchQuery) || answer.includes(searchQuery)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+
+        // Assegna automaticamente gli ID alle domande (opzionale)
+        (function () {
+            const faqItems = document.querySelectorAll('.faq-item .question');
+            const lettersFound = {};
+
+            faqItems.forEach(question => {
+                const firstLetter = question.innerText.trim().charAt(0).toUpperCase();
+                if (!lettersFound[firstLetter]) {
+                    lettersFound[firstLetter] = true;
+                    question.id = 'letter-' + firstLetter;
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elenco Risposte</title>
+    <style>
+        /* ===========================
+       Variabili CSS
+    =========================== */
+        :root {
+            --primary-color: #0073e6;
+            /* Colore originale delle domande */
+            --secondary-color: #fff;
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --font-family: Arial, sans-serif;
+            --max-width: 800px;
+            --border-radius: 5px;
+            --padding: 1rem;
+            --font-size-base: 1rem;
+            --line-height-base: 1.5;
+
+            /* Nuove variabili per migliorare la leggibilità */
+            --question-color: #003366;
+            /* Nuovo colore per le domande */
+            --answer-font-weight: bold;
+            /* Aumenta lo spessore del carattere delle risposte */
+            --answer-font-size: 1.2rem;
+            /* Aumenta la dimensione del font delle risposte */
+            --question-font-size: 1.2rem;
+            /* Aumenta la dimensione del font delle domande */
+        }
+
+        /* ===========================
+       Stili Globali
+    =========================== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-color);
+            margin: 0;
+            padding-top: 70px;
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--text-color);
+            font-size: 1.8rem;
+            margin: 0 0 1rem 0;
+            font-weight: bold;
+        }
+
+        /* ===========================
+       Barra di Navigazione Alfabetica
+    =========================== */
+        .alphabet-nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            padding: 0.5rem;
+            text-align: center;
+            z-index: 1000;
+        }
+
+        .alphabet-nav a {
+            color: var(--secondary-color);
+            margin: 0 0.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .alphabet-nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===========================
+       Barra di Ricerca a Scomparsa
+    =========================== */
+        .search-bar-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        #search-toggle {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        #search-bar {
+            margin-top: 0.5rem;
+        }
+
+        #search-bar input[type="text"] {
+            width: 200px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* ===========================
+       Pulsante per tornare alla Index
+    =========================== */
+        #back-button {
+            position: fixed;
+            bottom: 80px;
+            /* Posizionato sopra il pulsante della lente */
+            right: 20px;
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            border: none;
+            padding: 0.5rem;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            cursor: pointer;
+            text-align: center;
+            line-height: 1;
+        }
+
+        /* ===========================
+       Contenitore Risposte
+    =========================== */
+        .answer-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* ===========================
+       Risposte
+    =========================== */
+        .answer-item {
+            padding: var(--padding);
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+            background-color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-weight: var(--answer-font-weight);
+            font-size: var(--answer-font-size);
+            color: var(--text-color);
+        }
+
+        /* ===========================
+       Responsive Design
+    =========================== */
+        @media (max-width: 768px) {
+            :root {
+                --font-size-base: 1.2rem;
+                --line-height-base: 1.6;
+                --padding: 1.5rem;
+                --answer-font-size: 1.4rem;
+                --question-font-size: 1.4rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .search-bar-container input[type="text"] {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --font-size-base: 1.4rem;
+                --line-height-base: 1.7;
+                --padding: 1.5rem;
+                --answer-font-size: 1.6rem;
+                --question-font-size: 1.6rem;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .search-bar-container input[type="text"] {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Barra di Navigazione Alfabetica -->
+    <div class="alphabet-nav">
+        <a href="#letter-A">A</a>
+        <a href="#letter-B">B</a>
+        <a href="#letter-C">C</a>
+        <a href="#letter-D">D</a>
+        <a href="#letter-E">E</a>
+        <a href="#letter-F">F</a>
+        <a href="#letter-G">G</a>
+        <a href="#letter-H">H</a>
+        <a href="#letter-I">I</a>
+        <a href="#letter-J">J</a>
+        <a href="#letter-K">K</a>
+        <a href="#letter-L">L</a>
+        <a href="#letter-M">M</a>
+        <a href="#letter-N">N</a>
+        <a href="#letter-O">O</a>
+        <a href="#letter-P">P</a>
+        <a href="#letter-Q">Q</a>
+        <a href="#letter-R">R</a>
+        <a href="#letter-S">S</a>
+        <a href="#letter-T">T</a>
+        <a href="#letter-U">U</a>
+        <a href="#letter-V">V</a>
+        <a href="#letter-W">W</a>
+        <a href="#letter-X">X</a>
+        <a href="#letter-Y">Y</a>
+        <a href="#letter-Z">Z</a>
+    </div>
+
+    <h1>Elenco Risposte</h1>
+
+    <div class="answer-container" id="answer-container">
+        <div class="answer-item" id="letter-A">
+            Allergie: Le allergie sono una reazione del sistema immunitario a una sostanza normalmente innocua (come
+            cibo, polline o polvere). Il sistema immunitario “confonde” la sostanza con una minaccia e produce anticorpi
+            IgE contro di essa. Quando una persona allergica entra in contatto con l’allergene (la sostanza che provoca
+            l’allergia), il corpo rilascia istamina e altre sostanze chimiche per difendersi, causando i sintomi tipici
+            dell’allergia. I sintomi di un’allergia possono essere immediati e variare da lievi a gravi. Possono
+            includere: Prurito o eruzione cutanea (orticaria), Difficoltà respiratorie o respiro sibilante, Gonfiore
+            (specialmente del viso, delle labbra, della lingua), Nausea, vomito o diarrea, Anaphylassi (reazione grave e
+            potenzialmente letale con difficoltà respiratorie, abbassamento della pressione sanguigna e shock).
+            Intolleranze: Le intolleranze non coinvolgono il sistema immunitario. Sono generalmente dovute a problemi
+            digestivi o a difficoltà nel metabolizzare una determinata sostanza. Per esempio, una intolleranza al
+            lattosio si verifica quando il corpo non è in grado di digerire il lattosio (lo zucchero del latte) a causa
+            della carenza dell’enzima lattasi. I sintomi possono includere: Gonfiore addominale, Diarrea, Nausea, Crampi
+            addominali, Flatulenza. I sintomi sono generalmente più localizzati e meno gravi rispetto a quelli di
+            un’allergia, ma possono essere fastidiosi.
+        </div>
+
+        <div class="answer-item">
+            Anticorpi nelle reazioni immunochimiche: sono fondamentali nelle reazioni immunochimiche per il loro ruolo
+            nel riconoscere e legarsi specificamente agli antigeni. Possono essere policlonali o monoclonali e vengono
+            utilizzati per rilevare e quantificare la presenza di un antigene.
+        </div>
+
+      
+    </div>
+
+    <!-- Pulsante per tornare alla Index -->
+    <button id="back-button">C</button>
+
+    <!-- Barra di Ricerca a Scomparsa nell'Angolo in Basso a Destra -->
+    <div class="search-bar-container">
+        <button id="search-toggle">&#128269;</button>
+        <div id="search-bar" class="hidden">
+            <input type="text" id="search-input" placeholder="Cerca una risposta...">
+        </div>
+    </div>
+
+    <script>
+        // Toggle visibilità della barra di ricerca
+        document.getElementById('search-toggle').addEventListener('click', function () {
+            const searchBar = document.getElementById('search-bar');
+            searchBar.classList.toggle('hidden');
+        });
+
+        // Funzionalità di ricerca
+        document.getElementById('search-input').addEventListener('input', function () {
+            const searchQuery = this.value.toLowerCase();
+            const answerItems = document.querySelectorAll('.answer-item');
+
+            answerItems.forEach(item => {
+                const answerText = item.innerText.toLowerCase();
+
+                if (answerText.includes(searchQuery)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+        });
+
+        // Pulsante per tornare alla Index
+        document.getElementById('back-button').addEventListener('click', function () {
+            window.location.href = 'index.html';
+        });
+
+        // Assegna automaticamente gli ID alle risposte (opzionale)
+        (function () {
+            const answerItems = document.querySelectorAll('.answer-item');
+            const lettersFound = {};
+
+            answerItems.forEach(answer => {
+                const firstLetter = answer.innerText.trim().charAt(0).toUpperCase();
+                if (!lettersFound[firstLetter]) {
+                    lettersFound[firstLetter] = true;
+                    answer.id = 'letter-' + firstLetter;
+                }
+            });
+        })();
+    </script>
+
+</body>
+
+</html>
